@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>云杉文件管理器</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">File Manager</p>
+          <h1>云杉文件管理器</h1>
+          <p class="muted">
+            一个轻量、可本地运行的中文文件管理软件，支持目录浏览、搜索、预览、创建、重命名、删除与上传。
+          </p>
+        </div>
+
+        <div class="panel action-panel">
+          <button id="open-directory-btn" class="primary-btn">打开本地目录</button>
+          <label class="secondary-btn file-input-label">
+            回退导入目录
+            <input id="directory-picker" type="file" webkitdirectory directory multiple />
+          </label>
+          <button id="new-folder-btn" class="secondary-btn" disabled>新建文件夹</button>
+          <button id="new-file-btn" class="secondary-btn" disabled>新建文本文件</button>
+        </div>
+
+        <div class="panel stats-panel">
+          <h2>工作区概览</h2>
+          <div class="stats-grid">
+            <div>
+              <span class="stats-label">当前路径</span>
+              <strong id="current-path">未打开</strong>
+            </div>
+            <div>
+              <span class="stats-label">项目数量</span>
+              <strong id="item-count">0</strong>
+            </div>
+            <div>
+              <span class="stats-label">文件夹</span>
+              <strong id="folder-count">0</strong>
+            </div>
+            <div>
+              <span class="stats-label">文件</span>
+              <strong id="file-count">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel help-panel">
+          <h2>能力说明</h2>
+          <ul>
+            <li>支持面包屑导航、排序与实时搜索。</li>
+            <li>文本 / 图片 / JSON 文件可直接预览。</li>
+            <li>支持拖拽上传文件到当前目录。</li>
+            <li>使用现代浏览器时可直接操作本地文件系统。</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="toolbar panel">
+          <div class="breadcrumbs-section">
+            <div id="breadcrumbs" class="breadcrumbs"></div>
+            <p id="status-message" class="muted">请先打开一个本地目录开始管理文件。</p>
+          </div>
+          <div class="toolbar-actions">
+            <input id="search-input" type="search" placeholder="搜索文件或文件夹" />
+            <select id="sort-select">
+              <option value="folders-first">文件夹优先</option>
+              <option value="name-asc">名称 A → Z</option>
+              <option value="name-desc">名称 Z → A</option>
+              <option value="size-desc">大小从大到小</option>
+              <option value="size-asc">大小从小到大</option>
+            </select>
+            <button id="refresh-btn" class="ghost-btn" disabled>刷新</button>
+          </div>
+        </header>
+
+        <section class="content-grid">
+          <section class="panel file-panel">
+            <div class="section-heading">
+              <h2>目录内容</h2>
+              <span id="selection-count" class="chip">未选择</span>
+            </div>
+            <div id="drop-zone" class="drop-zone">将文件拖拽到这里上传到当前目录</div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>名称</th>
+                    <th>类型</th>
+                    <th>大小</th>
+                    <th>修改时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="file-list"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel preview-panel">
+            <div class="section-heading">
+              <h2>详情与预览</h2>
+              <span id="preview-kind" class="chip">暂无内容</span>
+            </div>
+            <div id="preview-meta" class="preview-meta muted">选择一个文件或文件夹查看详情。</div>
+            <div id="preview-content" class="preview-content empty-state">
+              打开目录后，点击右侧列表中的项目即可预览。
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <template id="action-template">
+      <div class="row-actions">
+        <button data-action="open">打开</button>
+        <button data-action="rename">重命名</button>
+        <button data-action="download">下载</button>
+        <button data-action="delete" class="danger">删除</button>
+      </div>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
